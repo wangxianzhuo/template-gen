@@ -1,20 +1,24 @@
 [
     {
-        "packageName": "com.sykj.river.master.service",
-        "classRoot": "com.sykj.river.master",
-        "className": "River",
-        "objectName": "river",
-        "generateDate": "2020-05-21T14:30:50+08:00",
-        "templateFilePath": "../sample/templateService",
-        "outputFile": "../sample/RiverService.Java"
+        "templateFile": "../sample/templateService.gotmpl",
+        "outputFile": "../sample/RiverService.Java",
+        "renderData": {
+            "packageName": "com.sykj.river.master.service",
+            "classRoot": "com.sykj.river.master",
+            "className": "River",
+            "objectName": "river",
+            "generateDate": "2020-05-21T14:30:50+08:00"
+        }
     },
     {
-        "packageName": "com.sykj.river.master.service",
-        "classRoot": "com.sykj.river.master",
-        "className": "River",
-        "objectName": "river",
-        "generateDate": "2020-05-21T14:30:50+08:00",
-        "templateFilePath": "../sample/templateServiceImpl",
-        "outputFile": "../sample/RiverServiceImpl.Java"
+        "templateFile": "../sample/templateServiceImpl.gotmpl",
+        "outputFile": "../sample/RiverServiceImpl.Java",
+        "renderData": {
+            "packageName": "com.sykj.river.master.service",
+            "classRoot": "com.sykj.river.master",
+            "className": "River",
+            "objectName": "river",
+            "generateDate": "2020-05-21T14:30:50+08:00"
+        }
     }
 ]

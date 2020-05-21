@@ -7,14 +7,20 @@ import (
 	"time"
 )
 
+// type templateConfigElem struct {
+// 	PackageName      string `json:"packageName"`
+// 	ClassRoot        string `json:"classRoot"`
+// 	ClassName        string `json:"className"`
+// 	ObjectName       string `json:"objectName"`
+// 	GenerateDate     string `json:"generateDate"`
+// 	TemplateFilePath string `json:"templateFilePath"`
+// 	OutputFile       string `json:"outputFile"`
+// }
+
 type templateConfigElem struct {
-	PackageName      string `json:"packageName"`
-	ClassRoot        string `json:"classRoot"`
-	ClassName        string `json:"className"`
-	ObjectName       string `json:"objectName"`
-	GenerateDate     string `json:"generateDate"`
-	TemplateFilePath string `json:"templateFilePath"`
-	OutputFile       string `json:"outputFile"`
+	TemplateFile string            `json:"templateFile"`
+	OutputFile   string            `json:"outputFile"`
+	RenderData   map[string]string `json:"renderData"`
 }
 
 // TemplateConfig 模板配置
@@ -27,8 +33,8 @@ func ParseConfig(config []byte) (result TemplateConfig) {
 		log.Panic("解析配置失败:", err)
 	}
 	for i := range result {
-		if result[i].GenerateDate == "" {
-			result[i].GenerateDate = time.Now().Format(time.RFC3339)
+		if v, ok := result[i].RenderData["generateDate"]; !ok || v == "" {
+			result[i].RenderData["generateDate"] = time.Now().Format(time.RFC3339)
 		}
 	}
 	return

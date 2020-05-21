@@ -14,30 +14,33 @@ func TestParseConfig(t *testing.T) {
 		args       args
 		wantResult TemplateConfig
 	}{
-		// TODO: Add test cases.
 		{
 			args: args{
 				config: []byte(`[
 					{
-						"packageName": "com.sykj.river.master.service",
-						"classRoot": "com.sykj.river.master",
-						"className": "River",
-						"objectName": "river",
-						"generateDate": "2020-05-21T14:30:50+08:00",
-						"templateFilePath": "../sample/templateService",
+						"templateFile": "../sample/templateService.gotmpl",
 						"outputFile": "../sample/RiverService.Java",
+						"renderData": {
+							"packageName": "com.sykj.river.master.service",
+							"classRoot": "com.sykj.river.master",
+							"className": "River",
+							"objectName": "river",
+							"generateDate": "2020-05-21T14:30:50+08:00"
+						}
 					}
 				]`),
 			},
 			wantResult: TemplateConfig{
 				{
-					PackageName:      "com.sykj.river.master.service",
-					ClassRoot:        "com.sykj.river.master",
-					ClassName:        "River",
-					ObjectName:       "river",
-					GenerateDate:     "2020-05-21T14:30:50+08:00",
-					TemplateFilePath: "../sample/templateService",
-					OutputFile:       "../sample/RiverService.Java",
+					TemplateFile: "../sample/templateService.gotmpl",
+					OutputFile:   "../sample/RiverService.Java",
+					RenderData: map[string]string{
+						"packageName":  "com.sykj.river.master.service",
+						"classRoot":    "com.sykj.river.master",
+						"className":    "River",
+						"objectName":   "river",
+						"generateDate": "2020-05-21T14:30:50+08:00",
+					},
 				},
 			},
 		},
@@ -60,20 +63,32 @@ func TestParseConfigFile(t *testing.T) {
 		args       args
 		wantResult TemplateConfig
 	}{
-		// TODO: Add test cases.
 		{
 			args: args{
 				fileName: "../sample/config_sample.json",
 			},
 			wantResult: TemplateConfig{
 				{
-					PackageName:      "com.sykj.river.master.service",
-					ClassRoot:        "com.sykj.river.master",
-					ClassName:        "River",
-					ObjectName:       "river",
-					GenerateDate:     "2020-05-21T14:30:50+08:00",
-					TemplateFilePath: "../sample/templateService",
-					OutputFile:       "../sample/RiverService.Java",
+					TemplateFile: "../sample/templateService.gotmpl",
+					OutputFile:   "../sample/RiverService.Java",
+					RenderData: map[string]string{
+						"packageName":  "com.sykj.river.master.service",
+						"classRoot":    "com.sykj.river.master",
+						"className":    "River",
+						"objectName":   "river",
+						"generateDate": "2020-05-21T14:30:50+08:00",
+					},
+				},
+				{
+					TemplateFile: "../sample/templateServiceImpl.gotmpl",
+					OutputFile:   "../sample/RiverServiceImpl.Java",
+					RenderData: map[string]string{
+						"packageName":  "com.sykj.river.master.service",
+						"classRoot":    "com.sykj.river.master",
+						"className":    "River",
+						"objectName":   "river",
+						"generateDate": "2020-05-21T14:30:50+08:00",
+					},
 				},
 			},
 		},

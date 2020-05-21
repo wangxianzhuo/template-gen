@@ -1,0 +1,23 @@
+package {{ .packageName }};
+
+import {{ .classRoot }}.model.{{ .className }};
+
+import java.util.List;
+
+/**
+ * {{ .className }}Service
+ *
+ * @generator com.github.wangxianzhuo.template-gen
+ * @date {{ .generateDate }}
+ */
+public interface {{ .className }}Service {
+    {{ .className }} get(String id);
+
+    List<{{ .className }}> all();
+
+    void add({{ .className }} {{ .objectName }});
+
+    void modify({{ .className }} {{ .objectName }});
+
+    void remove(String id);
+}

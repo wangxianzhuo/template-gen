@@ -7,9 +7,9 @@ import (
 	"text/template"
 )
 
-func generate(wr io.Writer, templateFileName string, templateConfigElem templateConfigElem) error {
+func generate(wr io.Writer, templateFileName string, data map[string]string) error {
 	t := template.Must(template.ParseFiles(templateFileName))
-	err := t.Execute(wr, templateConfigElem)
+	err := t.Execute(wr, data)
 	if err != nil {
 		return err
 	}
@@ -18,9 +18,9 @@ func generate(wr io.Writer, templateFileName string, templateConfigElem template
 }
 
 // ParseTemplate 向指定writer写入渲染后的模板
-func ParseTemplate(wr io.Writer, templateConfigData TemplateConfig) error {
-	for _, configDatum := range templateConfigData {
-		err := generate(wr, configDatum.TemplateFilePath, configDatum)
+func ParseTemplate(wr io.Writer, templateConfig TemplateConfig) error {
+	for _, configElem := range templateConfig {
+		err := generate(wr, configElem.TemplateFile, configElem.RenderData)
 		if err != nil {
 			log.Panic(err)
 		}
@@ -30,33 +30,17 @@ func ParseTemplate(wr io.Writer, templateConfigData TemplateConfig) error {
 
 // ParseTemplateWriteToFile 向配置的文件写入渲染后的模板
 func ParseTemplateWriteToFile(templateConfig TemplateConfig) error {
-	for _, configDatum := range templateConfig {
-		f, err := openOutputFile(configDatum.OutputFile)
+	for _, configElem := range templateConfig {
+		f, err := os.OpenFile(configElem.OutputFile, os.O_CREATE|os.O_WRONLY, 0666)
 		if err != nil {
 			log.Panic(err)
 		}
-		err = generate(f, configDatum.TemplateFilePath, configDatum)
+		err = generate(f, configElem.TemplateFile, configElem.RenderData)
 		if err != nil {
 			log.Panic(err)
 		}
 	}
 	return nil
-}
-
-func openOutputFile(fileName string) (io.Writer, error) {
-	var f *os.File
-	var err error
-	if checkFileIsExist(fileName) { //如果文件存在
-		f, err = os.OpenFile(fileName, os.O_APPEND, 0666) //打开文件
-	} else {
-		f, err = os.Create(fileName) //创建文件
-	}
-
-	if err != nil {
-		return nil, err
-	}
-
-	return f, nil
 }
 
 func checkFileIsExist(filename string) bool {

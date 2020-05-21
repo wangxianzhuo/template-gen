@@ -1,0 +1,49 @@
+package {{ .packageName }}.impl;
+
+import {{ .classRoot }}.model.{{ .className }};
+import {{ .classRoot }}.model.{{ .className }}Example;
+import {{ .classRoot }}.persistence.{{ .className }}Mapper;
+import {{ .classRoot }}.service.{{ .className }}Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * description: {{ .className }}ServiceImpl
+ *
+ * @generator com.github.wangxianzhuo.template-gen
+ * @date {{ .generateDate }}
+ * @version: 1.0
+ */
+@Service
+public class {{ .className }}ServiceImpl implements {{ .className }}Service {
+
+    @Autowired
+    private {{ .className }}Mapper {{ .objectName }}Mapper;
+
+    @Override
+    public {{ .className }} get(String id) {
+        return {{ .objectName }}Mapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<{{ .className }}> all() {
+        return {{ .objectName }}Mapper.selectByExample(new {{ .className }}Example());
+    }
+
+    @Override
+    public void add({{ .className }} {{ .objectName }}) {
+        {{ .objectName }}Mapper.insertSelective({{ .objectName }});
+    }
+
+    @Override
+    public void modify({{ .className }} {{ .objectName }}) {
+        {{ .objectName }}Mapper.updateByPrimaryKeySelective({{ .objectName }});
+    }
+
+    @Override
+    public void remove(String id) {
+        {{ .objectName }}Mapper.deleteByPrimaryKey(id);
+    }
+}
