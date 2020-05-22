@@ -31,9 +31,15 @@ func ParseTemplate(wr io.Writer, templateConfig TemplateConfig) error {
 // ParseTemplateWriteToFile 向配置的文件写入渲染后的模板
 func ParseTemplateWriteToFile(templateConfig TemplateConfig) error {
 	for _, configElem := range templateConfig {
-		f, err := os.OpenFile(configElem.OutputFile, os.O_CREATE|os.O_WRONLY, 0666)
-		if err != nil {
-			log.Panic(err)
+		var f io.Writer
+		var err error
+		if configElem.OutputFile == "" {
+			f = os.Stdout
+		} else {
+			f, err = os.Create(configElem.OutputFile)
+			if err != nil {
+				log.Panic(err)
+			}
 		}
 		err = generate(f, configElem.TemplateFile, configElem.RenderData)
 		if err != nil {
